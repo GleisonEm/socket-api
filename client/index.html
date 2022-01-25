@@ -1,0 +1,31 @@
+<!-- ./client/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="myForm">
+      <label for="myName">Enviar mensagem:</label>
+      <input id="myName" name="name" placeholder="Escreva">
+      <input type="submit" value="Enviar">
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+    <script>
+      const form = document.getElementById( "myForm" );
+      // ...and take over its submit event.
+      form.addEventListener( "submit", function ( event ) {
+        event.preventDefault();
+        const form = document.getElementById( "myForm" );
+        const socket = io("http://localhost:3000");
+        console.log(form, form.elements['name'].value);
+        socket.emit("message", form.elements['name'].value);
+
+      });
+    </script>
+  </body>
+</html>
