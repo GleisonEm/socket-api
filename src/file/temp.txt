@@ -1,0 +1,5 @@
+use Intec\MovaOperacionalApi\Action\Admin\FunnelFlag\AdminFunnelFlagProductActivation;
+use Intec\MovaOperacionalApi\Action\Admin\FunnelFlag\AdminFunnelFlagProductFilter;
+use Intec\MovaOperacionalApi\Action\Admin\FunnelFlag\AdminFunnelFlagProductRemove;
+use Intec\MovaOperacionalApi\Action\Admin\FunnelFlag\AdminFunnelFlagToProductMassBind;
+use Intec\MovaOperacionalApi\Action\Admin\Report\AdminGetManyOperatorsReports;

@@ -10,22 +10,50 @@
   <body>
     <form id="myForm">
       <label for="myName">Enviar mensagem:</label>
-      <input id="myName" name="name" placeholder="Escreva">
+      <input id="myName" class="signin" name="name" onchange="inputChange()" onpaste="inputChange()" placeholder="Escreva">
       <input type="submit" value="Enviar">
     </form>
+    <p>
+      <h1 id="result">
+        aguardando
+      </h1>
+    </p>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
     <script>
       const form = document.getElementById( "myForm" );
       // ...and take over its submit event.
-      form.addEventListener( "submit", function ( event ) {
-        event.preventDefault();
-        const form = document.getElementById( "myForm" );
-        const socket = io("http://localhost:3000");
-        console.log(form, form.elements['name'].value);
-        socket.emit("message", form.elements['name'].value);
+      // form.addEventListener( "submit", function ( event ) {
+      //   event.preventDefault();
 
-      });
+      function inputChange() {
+        var text = document.getElementById('myName').value;
+        if (text.length > 0) {
+          var result = text.replace( /([A-Z])/g, " $1" );
+          result = result.toLowerCase();
+          document.getElementById("result").innerHTML = result;
+        }
+      }
+
+
+      // });
     </script>
   </body>
 </html>
+<style>
+  .signin {
+    min-width:42%;
+    height: 100px;
+    width: 400px;
+    top:0%;
+    right:0%;
+    z-index:10;
+    background-color:#CCC;
+    border: 1px solid grey;
+
+  }
+
+  .signin input {
+    background-color:#FFF
+  }
+</style>
