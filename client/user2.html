@@ -23,10 +23,11 @@
         const form = document.getElementById( "myForm" );
         const socket = io("http://localhost:3000");
         console.log(form, form.elements['name'].value);
-        socket.emit("message", [
-          form.elements['name'].value
-
-        ]);
+        socket.emit("message", {
+          message: form.elements['name'].value,
+          userSendId: "6219124fc392c345cde298e5",
+          conversationId: "6219124fc392c345cde298e10"
+        });
 
       });
     </script>

@@ -1,0 +1,65 @@
+<!-- ./client/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="messagesdiv">
+      <h1>Chat</h1>
+    </div>
+    <form id="myForm">
+      <label for="myName">Enviar mensagem:</label>
+      <input id="myName" name="name" placeholder="Escreva" />
+      <input type="submit" value="Enviar" />
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js" integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      const form = document.getElementById("myForm");
+      const messagesDiv = document.getElementById("messagesdiv");
+      const userId = "6219124fc392c345cde298e6";
+      // ...and take over its submit event.
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const form = document.getElementById("myForm");
+        const socket = io("http://localhost:3000");
+        console.log(form, form.elements["name"].value);
+        socket.emit("message", {
+          message: form.elements["name"].value,
+          userSendId: "6219124fc392c345cde298e6",
+          conversationId: "6219124fc392c345cde298e10",
+        });
+      });
+
+      window.onload = async function () {
+        const response = await axios.get("http://192.168.0.106:3333/message", {
+            data: {
+            conversationId: "6219124fc392c345cde298e10",
+            }
+        });
+
+        console.log(response.data)
+        // var messages = "<%= messages %>";
+        var messages = response.data;
+        var html = "";
+        messages.forEach((element) => {
+          if (element.userSendId == userId) {
+            html += '<span style="text-align: right">';
+          } else {
+            html += '<span style="text-align: left">';
+          }
+
+          html += element.message;
+          html += "</span>";
+        });
+
+        messagesDiv.innerHTML = html;
+      };
+    </script>
+  </body>
+</html>
