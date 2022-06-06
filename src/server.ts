@@ -13,13 +13,13 @@ let http = require("http").Server(app);
 let io = require("socket.io")(http);
 
 app.get("/user1", async (req: any, res: any) => {
-  const response = await axios.get('http://192.168.0.106:3333/message', {
-      data: {
-        conversationId: "6219124fc392c345cde298e10"
-      }
-    });
+  // const response = await axios.get('http://192.168.0.106:3333/message', {
+  //     data: {
+  //       conversationId: "6219124fc392c345cde298e10"
+  //     }
+  //   });
 
-    console.log('deu certo', response.data)
+    // console.log('deu certo', response.data)
   res.sendFile(path.resolve("./client/user1.html"));
 });
 
