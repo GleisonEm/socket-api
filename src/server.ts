@@ -6,7 +6,7 @@ var cors = require('cors')
 
 const app = express();
 app.set("port", process.env.PORT || 3000);
-app.use(cors({origin: '*'}));
+app.use(cors({ origin: '*' }));
 let http = require("http").Server(app);
 // set up socket.io and bind it to our
 // http server.
@@ -19,7 +19,7 @@ app.get("/user1", async (req: any, res: any) => {
   //     }
   //   });
 
-    // console.log('deu certo', response.data)
+  // console.log('deu certo', response.data)
   res.sendFile(path.resolve("./client/user1.html"));
 });
 
@@ -41,21 +41,22 @@ app.get("/user2", (req: any, res: any) => {
 
 // whenever a user connects on port 3000 via
 // a websocket, log that a user has connected
-io.on("connection", function(socket: any) {
+io.on("connection", function (socket: any) {
   console.log("a user connected");
   // whenever we receive a 'message' we log it out
-  socket.on("message", async function(content: any) {
+  socket.on("message", async function (content: any) {
     console.log(content);
-    const response = await axios.post('http://192.168.0.106:3333/message', {
+    const response = await axios.post('http://192.168.0.106:3340/message', {
       message: content.message,
       conversationId: content.conversationId,
-      userSendId: content.userSendId
+      userSendId: content.userSendId,
+      uniqueId: content.uniqueId,
     });
-
+    io.emit(content.conversationId, content)
     console.log('deu certo', response);
   });
 });
 
-const server = http.listen(3000, function() {
+const server = http.listen(3000, function () {
   console.log("listening on *:3000");
 });
