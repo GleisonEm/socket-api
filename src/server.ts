@@ -46,7 +46,7 @@ io.on("connection", function (socket: any) {
   // whenever we receive a 'message' we log it out
   socket.on("message", async function (content: any) {
     console.log(content);
-    const response = await axios.post('http://192.168.0.106:3340/message', {
+    const response = await axios.post('http://192.168.0.106:3340/messages', {
       message: content.message,
       conversationId: content.conversationId,
       userSendId: content.userSendId,
